@@ -28,7 +28,7 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JsonBackReference
     private User user_id;
     

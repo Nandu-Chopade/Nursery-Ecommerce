@@ -39,4 +39,8 @@ public class User {
 
     @OneToMany(mappedBy = "user_id",cascade = CascadeType.ALL)
     List<Review> reviews ;
+    
+    @OneToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 }

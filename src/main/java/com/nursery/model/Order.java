@@ -37,6 +37,9 @@ public class Order {
     @ManyToOne
     @JsonBackReference
     private User user;
+    
+    @OneToOne(mappedBy = "order")
+    private Payment payment;
 
 
 }
