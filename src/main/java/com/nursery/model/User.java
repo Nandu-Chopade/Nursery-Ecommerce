@@ -33,6 +33,7 @@ public class User {
     private Set<Role> roles;
    
     
+    //order related relationship 
     @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
     private List<Order> orders;
 

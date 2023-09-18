@@ -24,8 +24,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
+    // Other fields and getters/setters...
+
+    // Add a @PrePersist method to set the orderDate before persisting
+    @PrePersist
+    protected void onCreate() {
+        this.orderDate = new Date();
+    }
+    
     
     @ManyToOne
     @JsonBackReference
