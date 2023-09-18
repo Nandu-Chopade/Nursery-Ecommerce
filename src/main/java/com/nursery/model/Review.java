@@ -1,5 +1,7 @@
 package com.nursery.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -10,33 +12,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="ORDER_TABLE")
-public class Order {
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String comment;
+    private int rating;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date orderDate;
-
-    // Add a @PrePersist method to set the orderDate before persisting
-    @PrePersist
-    protected void onCreate() {
-        this.orderDate = new Date();
-    }
-    
+    private Date createdAt;
     
     @ManyToOne
     @JsonBackReference
-    private User user;
+    private User user_id;
 
 
 }
