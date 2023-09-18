@@ -31,6 +31,11 @@ public class Review {
     @ManyToOne
     @JsonBackReference
     private User user_id;
+    
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    @JsonBackReference      
+    private Product product;
 
 
 }
