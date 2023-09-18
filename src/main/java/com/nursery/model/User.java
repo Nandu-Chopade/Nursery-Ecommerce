@@ -1,5 +1,6 @@
 package com.nursery.model;
 
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -31,4 +32,8 @@ public class User {
     )
     private Set<Role> roles;
    
+    
+    @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
+    private List<Order> orders;
+
 }
