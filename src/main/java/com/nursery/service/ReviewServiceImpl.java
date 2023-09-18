@@ -10,7 +10,7 @@ import com.nursery.dao.ReviewRepository;
 import com.nursery.model.Review;
 
 @Service
-public class ReviewServiceImpl {
+public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
     private  ReviewRepository reviewRepository;

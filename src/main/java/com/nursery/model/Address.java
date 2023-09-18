@@ -2,7 +2,7 @@ package com.nursery.model;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +24,6 @@ public class Address {
     private String pinCode;
     
     @OneToOne(mappedBy = "address")
-    @JsonBackReference
+//    @JsonBackReference
     private User user;
 }

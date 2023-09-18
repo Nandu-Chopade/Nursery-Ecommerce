@@ -26,7 +26,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
-    @JsonBackReference
+//    @JsonBackReference
     private List<User> users;
 
     // Getters and setters
