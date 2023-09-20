@@ -2,7 +2,7 @@ package com.nursery.model;
 
 import java.util.Date;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
