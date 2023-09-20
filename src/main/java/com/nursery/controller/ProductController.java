@@ -15,51 +15,59 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nursery.model.Categories;
+import com.nursery.dto.ProductDTO;
 import com.nursery.model.Product;
-import com.nursery.repository.CategoriesRepository;
 import com.nursery.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
-	@Autowired
+    @Autowired
     private ProductService productService;
-	
-	@Autowired
-	private CategoriesRepository categoriesRopository;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<ProductDTO> products = productService.getAllProducts();
+        if (products != null && !products.isEmpty()) {
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Optional<Product> product = productService.getProductById(id);
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
+        Optional<ProductDTO> product = productService.getProductById(id);
         return product.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping(path = "/category/{categoryId}/product" , consumes={"application/json"})
-    public ResponseEntity<Product> createProduct(@RequestBody Product product , @PathVariable Long categoryId) {
-    	Categories categories = categoriesRopository.findById(categoryId).get();
-    	product.setCategory(categories);
-    	Product createdProduct = productService.createProduct(product);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    @PostMapping(path = "/category/{categoryId}/product", consumes = { "application/json" })
+    public ResponseEntity<Product> createProduct(@RequestBody Product product, @PathVariable Long categoryId) {
+        if (product != null) {
+            Product createdProduct = productService.createProduct(product);
+            if (createdProduct != null) {
+                return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        Product updatedProduct = productService.updateProduct(id, product);
-        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+        if (product != null) {
+            Product updatedProduct = productService.updateProduct(id, product);
+            if (updatedProduct != null) {
+                return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-    	productService.deleteProduct(id);
+        productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

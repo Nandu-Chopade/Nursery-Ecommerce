@@ -6,15 +6,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.nursery.dto.AddressDTO;
+
 //import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Address {
     @Id
@@ -27,8 +31,7 @@ public class Address {
     private String state;
     private String pinCode;
     
-//    @JsonBackReference
+    @JsonBackReference
     @OneToOne(mappedBy = "address")
-//    @JsonBackReference
     private User user;
 }

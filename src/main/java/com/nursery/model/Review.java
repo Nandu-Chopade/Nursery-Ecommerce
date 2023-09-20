@@ -15,11 +15,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 // This is child class of user
 public class Review {

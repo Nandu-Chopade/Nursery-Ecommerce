@@ -10,11 +10,8 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Data
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Role {
     @Id

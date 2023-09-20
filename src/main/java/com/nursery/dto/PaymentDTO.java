@@ -2,14 +2,17 @@ package com.nursery.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import com.nursery.model.User;
+
+@Getter
+@Setter
 public class PaymentDTO {
 
     private Long id;

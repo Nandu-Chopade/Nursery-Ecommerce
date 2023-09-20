@@ -1,17 +1,12 @@
 package com.nursery.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class RoleDTO {
 
     private Long id;
     private String name;
-    private List<UserDTO> users; // Assuming UserDTO is the DTO for the User entity
 }

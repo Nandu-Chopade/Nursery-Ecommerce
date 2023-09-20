@@ -13,11 +13,8 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name="ORDER_TABLE")
 public class Order {

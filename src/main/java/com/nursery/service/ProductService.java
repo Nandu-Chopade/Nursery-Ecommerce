@@ -3,13 +3,14 @@ package com.nursery.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.nursery.dto.ProductDTO;
 import com.nursery.model.Product;
 
 public interface ProductService {
 
-    List<Product> getAllProducts();
+	List<ProductDTO> getAllProducts();
 
-    Optional<Product> getProductById(Long id);
+	 Optional<ProductDTO> getProductById(Long id);
 
     Product createProduct(Product product);
 
