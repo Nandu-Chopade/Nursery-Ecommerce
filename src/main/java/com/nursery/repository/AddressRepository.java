@@ -1,8 +1,9 @@
-package com.nursery.dao;
+package com.nursery.repository;
 
-import com.nursery.model.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.nursery.model.Address;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {

@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nursery.dao.OrderRepository;
-import com.nursery.dao.UserRepository;
 import com.nursery.model.Order;
 import com.nursery.model.User;
+import com.nursery.repository.OrderRepository;
+import com.nursery.repository.UserRepository;
 
 @Service
 public class OrderServiceImpl implements OrderService {

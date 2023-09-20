@@ -1,0 +1,19 @@
+{
+      "username":"vikas",
+       "password":"pwd",
+       "email": "vikas@gmail.com",
+       "address":{
+         "street":"first len",
+        "city" : "jamner",
+         "district":"Jalgaon",
+        "state":"Mh",
+        "pinCode": 424206
+       
+       },
+        "roles": [
+    {
+        "name": "ROLE_USER"
+    }
+]
+  
+}

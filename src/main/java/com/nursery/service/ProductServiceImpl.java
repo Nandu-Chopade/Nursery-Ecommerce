@@ -1,21 +1,24 @@
 package com.nursery.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.nursery.dao.ProductRepository;
-import com.nursery.model.Product;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.nursery.model.Product;
+import com.nursery.repository.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
     private ProductRepository productRepository;
+	
+	@Autowired
 
+	
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
@@ -25,14 +28,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product createProduct(Product product) {
-    	product.setPCreationTime(new Date());
-        return productRepository.save(product);
+    	product.setCreatedAt(new Date());
+          return productRepository.save(product);
     }
 
     public Product updateProduct(Long id, Product updatedProduct) {
         if (productRepository.existsById(id)) {
             updatedProduct.setId(id);
-            updatedProduct.setPUpdatedTime(new Date());
+            
+            updatedProduct.setModifiedAt(new Date());
             return productRepository.save(updatedProduct);
         } else {
 //            throw new NotFoundException("Product not found with id: " + id);

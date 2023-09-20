@@ -3,8 +3,8 @@ package com.nursery.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nursery.dao.CategoriesRepository;
 import com.nursery.model.Categories;
+import com.nursery.repository.CategoriesRepository;
 
 import java.util.List;
 import java.util.Optional;

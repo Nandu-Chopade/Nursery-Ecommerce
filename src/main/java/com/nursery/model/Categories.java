@@ -2,11 +2,11 @@ package com.nursery.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import jakarta.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,8 +27,9 @@ public class Categories {
     
 
     private String name;
-    
-    @OneToMany(mappedBy = "categories")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
+    @JsonBackReference
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
     
     // Constructors, getters, setters, and other methods

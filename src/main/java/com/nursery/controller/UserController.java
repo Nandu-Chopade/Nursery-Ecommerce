@@ -30,7 +30,7 @@ public class UserController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping(consumes={"application/json", "application/json;charset=UTF-8"})
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User createdUser = userService.saveUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);

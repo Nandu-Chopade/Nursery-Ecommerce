@@ -1,6 +1,10 @@
 package com.nursery.model;
 
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 //import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -23,6 +27,7 @@ public class Address {
     private String state;
     private String pinCode;
     
+//    @JsonBackReference
     @OneToOne(mappedBy = "address")
 //    @JsonBackReference
     private User user;

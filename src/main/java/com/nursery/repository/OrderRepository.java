@@ -1,4 +1,4 @@
-package com.nursery.dao;
+package com.nursery.repository;
 
 import java.util.List;
 

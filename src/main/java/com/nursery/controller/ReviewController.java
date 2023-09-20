@@ -1,38 +1,36 @@
 package com.nursery.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.nursery.dto.ReviewDTO;
 import com.nursery.model.Review;
-import com.nursery.service.ReviewServiceImpl;
+import com.nursery.service.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reviews")
 public class ReviewController {
 
-	@Autowired
-    private ReviewServiceImpl reviewServiceImpl;
+    @Autowired
+    private ReviewService reviewService;
 
-    @PostMapping
-    public Review createReview(@RequestBody Review review) {
-        return reviewServiceImpl.createReview(review);
+    @PostMapping("/users/{userId}/products/{productId}")
+    public ResponseEntity<String> createReview(@RequestBody Review review, @PathVariable Long userId, @PathVariable Long productId) {
+        Review createdReview = reviewService.createReview(review, userId, productId);
+        return ResponseEntity.ok("Review submitted successfully with ID: " + createdReview.getId());
     }
 
     @GetMapping("/{id}")
-    public Review getReviewById(@PathVariable Long id) {
-        return reviewServiceImpl.getReviewById(id);
+    public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id) {
+        ReviewDTO reviewDTO = reviewService.getReviewById(id);
+        return reviewDTO != null ? ResponseEntity.ok(reviewDTO) : ResponseEntity.notFound().build();
     }
 
     @GetMapping
-    public List<Review> getAllReviews() {
-        return reviewServiceImpl.getAllReviews();
+    public ResponseEntity<List<ReviewDTO>> getAllReviews() {
+        List<ReviewDTO> reviews = reviewService.getAllReviews();
+        return ResponseEntity.ok(reviews);
     }
-
 }

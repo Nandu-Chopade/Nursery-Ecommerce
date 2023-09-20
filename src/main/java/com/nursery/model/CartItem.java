@@ -1,8 +1,12 @@
 package com.nursery.model;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import jakarta.persistence.*;
 
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
 @Entity
 public class CartItem {
 
@@ -10,31 +14,21 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
     private int quantity;
 
-    private BigDecimal totalPrice;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Date createdAt;
 
-    // Constructors, getters, and setters
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modified_at")
+    private Date modifiedAt;
 
-    public CartItem() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "product_id") // This is the foreign key column
+    private Product product; // Represents the associated Product
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    // Constructors, getters, and setters
-
-    // Calculate and update the total price for this cart item
-//    public void updateTotalPrice() {
-//        totalPrice = product.getPPrice().multiply(BigDecimal.valueOf(quantity));
-//    }
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private ShippingSession sessionId;
 }

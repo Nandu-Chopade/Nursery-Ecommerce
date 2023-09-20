@@ -2,9 +2,12 @@ package com.nursery.model;
 
 import java.util.Date;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+// This is child class of user
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +32,17 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
     @JsonBackReference
-    private User user_id;
+    @JsonIgnore
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="user_id")
+    private User user;
     
+    @JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "product_id")
-//    @JsonBackReference      
+    @JoinColumn(name = "product_id")   
     private Product product;
 
 

@@ -1,9 +1,20 @@
 package com.nursery.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Payment {
 
@@ -15,11 +26,6 @@ public class Payment {
     private BigDecimal amount;
     private Date paymentDate;
 
-    // Constructors, getters, and setters
-
-    public Payment() {
-    }
-
     public Payment(String paymentMethod, BigDecimal amount, Date paymentDate) {
         this.paymentMethod = paymentMethod;
         this.amount = amount;
@@ -29,8 +35,4 @@ public class Payment {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id") // Specify the foreign key column
     private Order order;
-    // getters and setters
-
-    // Equals and hashCode methods
-    // You can customize these methods as needed
 }

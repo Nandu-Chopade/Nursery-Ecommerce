@@ -1,16 +1,12 @@
 package com.nursery.service;
 
-import java.util.List;
-
+import com.nursery.dto.ReviewDTO;
 import com.nursery.model.Review;
 
+import java.util.List;
+
 public interface ReviewService {
-
-    Review createReview(Review review);
-
-    List<Review> getAllReviews();
-
-    Review getReviewById(Long id);
-
-    // Add method signatures for updating and deleting reviews as needed
+    Review createReview(Review review, Long userId, Long productId);
+    List<ReviewDTO> getAllReviews();
+    ReviewDTO getReviewById(Long id);
 }

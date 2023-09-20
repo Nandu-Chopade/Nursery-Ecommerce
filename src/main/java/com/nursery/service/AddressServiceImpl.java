@@ -2,12 +2,15 @@ package com.nursery.service;
 
 
 import com.nursery.model.Address;
-import com.nursery.dao.AddressRepository;
+import com.nursery.repository.AddressRepository;
+import com.nursery.dto.AddressDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -17,12 +20,42 @@ public class AddressServiceImpl implements AddressService {
 
    
 
-    public List<Address> getAllAddresses() {
-        return addressRepository.findAll();
-    }
+	@Override
+    public List<AddressDTO> getAllAddresses() {
+        List<Address> addresses = addressRepository.findAll();
+        
+        // Map the list of Address entities to a list of AddressDTOs using lambda expressions
+        List<AddressDTO> addressDTOs = addresses.stream()
+            .map(address -> {
+                AddressDTO addressDTO = new AddressDTO();
+                addressDTO.setId(address.getId());
+                addressDTO.setStreet(address.getStreet());
+                addressDTO.setCity(address.getCity());
+                addressDTO.setDistrict(address.getDistrict());
+                addressDTO.setState(address.getState());
+                addressDTO.setPinCode(address.getPinCode());
+                return addressDTO;
+            })
+            .collect(Collectors.toList());
 
-    public Optional<Address> getAddressById(Long id) {
-        return addressRepository.findById(id);
+        return addressDTOs;
+    }
+	
+    @Override
+    public AddressDTO getAddressById(Long id) {
+        // Find the address by ID
+        return addressRepository.findById(id)
+                .map(address -> {
+                    AddressDTO addressDTO = new AddressDTO();
+                    addressDTO.setId(address.getId());
+                    addressDTO.setStreet(address.getStreet());
+                    addressDTO.setCity(address.getCity());
+                    addressDTO.setDistrict(address.getDistrict());
+                    addressDTO.setState(address.getState());
+                    addressDTO.setPinCode(address.getPinCode());
+                    return addressDTO;
+                })
+                .orElse(null); // Return null if the address is not found
     }
 
     public Address saveAddress(Address address) {
@@ -32,4 +65,11 @@ public class AddressServiceImpl implements AddressService {
     public void deleteAddress(Long id) {
         addressRepository.deleteById(id);
     }
+
+	@Override
+	public Optional<Address> getAddressByIds(Long id) {
+		return addressRepository.findById(id);
+	}
 }
+
+
