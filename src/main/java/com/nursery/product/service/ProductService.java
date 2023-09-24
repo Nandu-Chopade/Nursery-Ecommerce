@@ -12,7 +12,7 @@ public interface ProductService {
 
 	 Optional<ProductDTO> getProductById(Long id);
 
-    Product createProduct(Product product);
+    Product createProduct(Product product, Long categoryId);
 
     Product updateProduct(Long id, Product updatedProduct);
 

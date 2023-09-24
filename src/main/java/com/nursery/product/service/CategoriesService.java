@@ -3,17 +3,17 @@ package com.nursery.product.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.nursery.product.model.Categories;
+import com.nursery.product.model.Category;
 
 public interface CategoriesService {
 
-    List<Categories> getAllCategories();
+    List<Category> getAllCategories();
 
-    Optional<Categories> getCategoryById(Long id);
+    Optional<Category> getCategoryById(Long id);
 
-    Categories createCategory(Categories category);
+    Category createCategory(Category category);
 
-    Categories updateCategory(Long id, Categories updatedCategory);
+    Category updateCategory(Long id, Category updatedCategory);
 
     void deleteCategory(Long id);
 }

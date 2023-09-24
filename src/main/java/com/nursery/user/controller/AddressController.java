@@ -18,7 +18,7 @@ import com.nursery.user.model.Address;
 import com.nursery.user.service.AddressService;
 
 @RestController
-@RequestMapping("/api/addresses")
+@RequestMapping("/nursery.com/addresses")
 public class AddressController {
 	
 	@Autowired
@@ -56,7 +56,7 @@ public class AddressController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
-        if (!addressService.getAddressByIds(id).isPresent()){
+        if (addressService.getAddressByIds(id).isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         addressService.deleteAddress(id);
