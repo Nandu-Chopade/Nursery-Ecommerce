@@ -2,8 +2,7 @@ package com.nursery.reviews;
 
 import java.util.Date;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import jakarta.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;

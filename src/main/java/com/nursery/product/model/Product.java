@@ -3,23 +3,12 @@ package com.nursery.product.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nursery.cart.CartItem;
-import com.nursery.order.Order;
+import com.nursery.order.items.OrderItems;
 import com.nursery.reviews.Review;
 
 import lombok.Getter;
@@ -60,7 +49,7 @@ public class Product {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    private Categories category; // Associated category
+    private Category category; // Associated category
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -70,7 +59,7 @@ public class Product {
     private List<CartItem> cartItems; // Cart items for this product
     
     @ManyToMany(mappedBy = "products")
-    private List<Order> orders;
+    private List<OrderItems> orders;
     
     
 }

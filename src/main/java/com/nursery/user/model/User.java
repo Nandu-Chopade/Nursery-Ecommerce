@@ -4,25 +4,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nursery.Notification.Notification;
-import com.nursery.order.Order;
+import com.nursery.order.details.OrderDetails;
+import com.nursery.order.items.OrderItems;
+import com.nursery.payment.Payment;
 import com.nursery.reviews.Review;
+import com.nursery.shipping.ShippingSession;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -59,19 +49,19 @@ public class User {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
-    )
-    private Set<Role> roles;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Order> orders;
+    private String roles;
+    
+    @OneToMany(mappedBy = "user")
+    private List<OrderDetails> orders;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Review> reviews;
     
     @OneToMany(mappedBy = "recipient")
     List<Notification> notification;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ShippingSession> shippingSessions;
+
 }

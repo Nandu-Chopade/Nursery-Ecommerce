@@ -3,8 +3,8 @@ package com.nursery.product.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nursery.product.model.Categories;
-import com.nursery.product.repository.CategoriesRepository;
+import com.nursery.product.model.Category;
+import com.nursery.product.repository.CategoryRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,26 +13,26 @@ import java.util.Optional;
 public class CategoriesServiceImpl implements CategoriesService {
 
 	@Autowired
-    private CategoriesRepository categoriesRepository;
+    private CategoryRepository categoriesRepository;
    
 
     @Override
-    public List<Categories> getAllCategories() {
+    public List<Category> getAllCategories() {
         return categoriesRepository.findAll();
     }
 
     @Override
-    public Optional<Categories> getCategoryById(Long id) {
+    public Optional<Category> getCategoryById(Long id) {
         return categoriesRepository.findById(id);
     }
 
     @Override
-    public Categories createCategory(Categories category) {
+    public Category createCategory(Category category) {
         return categoriesRepository.save(category);
     }
 
     @Override
-    public Categories updateCategory(Long id, Categories updatedCategory) {
+    public Category updateCategory(Long id, Category updatedCategory) {
         if (categoriesRepository.existsById(id)) {
             updatedCategory.setId(id);
             return categoriesRepository.save(updatedCategory);

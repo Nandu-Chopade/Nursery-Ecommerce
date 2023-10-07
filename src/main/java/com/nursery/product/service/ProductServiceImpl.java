@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.nursery.product.dto.CategoriesDTO;
 import com.nursery.product.dto.ProductDTO;
+import com.nursery.product.model.Category;
 import com.nursery.product.model.Product;
+import com.nursery.product.repository.CategoryRepository;
 import com.nursery.product.repository.ProductRepository;
 import com.nursery.reviews.ReviewDTO;
 
@@ -19,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	CategoryRepository categoriesRepository;
 
 	public List<ProductDTO> getAllProducts() {
 		List<Product> products = productRepository.findAll();
@@ -39,11 +44,11 @@ public class ProductServiceImpl implements ProductService {
 			productDTO.setModifiedAt(product.getModifiedAt());
 
 			// Map Categories
-						CategoriesDTO categoriesDTO = new CategoriesDTO();
-						categoriesDTO.setId(product.getCategory().getId());
-						categoriesDTO.setName(product.getCategory().getName());
-						productDTO.setCategory(categoriesDTO);
-			
+			CategoriesDTO categoriesDTO = new CategoriesDTO();
+			categoriesDTO.setId(product.getCategory().getId());
+			categoriesDTO.setName(product.getCategory().getName());
+			productDTO.setCategory(categoriesDTO);
+
 			// Map Reviews
 			List<ReviewDTO> reviewDTOs = product.getReviews().stream().map(review -> {
 				ReviewDTO reviewDTO = new ReviewDTO();
@@ -64,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
 		return productDTOs;
 	}
 
+	@Override
 	public Optional<ProductDTO> getProductById(Long id) {
 		return productRepository.findById(id).map(product -> {
 			ProductDTO productDTO = new ProductDTO();
@@ -103,11 +109,15 @@ public class ProductServiceImpl implements ProductService {
 		});
 	}
 
-	public Product createProduct(Product product) {
+	@Override
+	public Product createProduct(Product product, Long categoryId) {
+		Category category = categoriesRepository.findById(categoryId).get();
+		product.setCategory(category);
 		product.setCreatedAt(new Date());
 		return productRepository.save(product);
 	}
 
+	@Override
 	public Product updateProduct(Long id, Product updatedProduct) {
 		if (productRepository.existsById(id)) {
 			updatedProduct.setId(id);
@@ -123,6 +133,7 @@ public class ProductServiceImpl implements ProductService {
 		return updatedProduct;
 	}
 
+	@Override
 	public void deleteProduct(Long id) {
 		if (productRepository.existsById(id)) {
 			productRepository.deleteById(id);
@@ -134,4 +145,5 @@ public class ProductServiceImpl implements ProductService {
 			// strategy
 		}
 	}
+
 }

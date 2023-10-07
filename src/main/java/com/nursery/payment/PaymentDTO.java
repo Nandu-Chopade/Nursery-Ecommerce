@@ -3,7 +3,7 @@ package com.nursery.payment;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.nursery.order.OrderDTO;
+import com.nursery.order.items.OrderItemDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +16,5 @@ public class PaymentDTO {
     private String paymentMethod;
     private BigDecimal amount;
     private Date paymentDate;
-    private OrderDTO order; // Assuming OrderDTO is the DTO for the Order entity
+    private OrderItemDTO order; // Assuming OrderDTO is the DTO for the Order entity
 }
