@@ -36,7 +36,8 @@ public class ApiLinks {
 					"/nursery.com/shipping-sessions/get/**",
 					"/nursery.com/shipping-sessions/create",
 					"/nursery.com/shipping-sessions/update/**",
-					"/nursery.com/shipping-sessions/delete/**"
+					"/nursery.com/shipping-sessions/delete/**",
+					"/nursery.com/users/current-user"
 				
                     
 			};

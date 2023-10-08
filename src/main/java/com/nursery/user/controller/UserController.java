@@ -1,8 +1,10 @@
 package com.nursery.user.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nursery.config.AuthRequest;
 import com.nursery.config.JwtService;
+import com.nursery.user.dto.JwtAuthResponse;
 import com.nursery.user.dto.UserDTO;
 import com.nursery.user.model.User;
+import com.nursery.user.repository.UserRepository;
 import com.nursery.user.service.UserService;
 
 @RestController
@@ -36,9 +42,18 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserRepository userRepository;
     
     @Autowired
     private JwtService jwtService;
+    
+    @Autowired
+	private ModelMapper mapper;
+    
+    @Autowired
+	private UserDetailsService userDetailsService;
+
     
     @GetMapping("/all")
 //  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -86,14 +101,28 @@ public class UserController {
     }
     
     @PostMapping("authenticate")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<JwtAuthResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
+        	
+        	String username = authentication.getName();
+        	User user  = userRepository.findByUsername(username).get();
+          String token = jwtService.generateToken(authRequest.getUsername());
+   		  JwtAuthResponse response = new JwtAuthResponse();
+   		
+   		 response.setToken(token);
+   		 response.setUser(this.mapper.map(user, UserDTO.class));
+   		
+   		return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
         } else {
             throw new UsernameNotFoundException("invalid user request !");
         }
-
-
     }
+    
+    @GetMapping("/current-user")
+	public ResponseEntity<UserDTO> getUser(Principal principal) {
+		User user = this.userRepository.findByUsername(principal.getName()).get();
+		return new ResponseEntity<UserDTO>(this.mapper.map(user, UserDTO.class), HttpStatus.OK);
+	}
 }
