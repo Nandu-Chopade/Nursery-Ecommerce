@@ -11,5 +11,5 @@ export const loginUser = (loginDetail) => {
   };
   
   export const getUser = (userId) => {
-    return myAxios.get(`/users/${userId}`).then((resp) => resp.data);
+    return myAxios.get(`/nursery.com/users/get/${userId}`).then((resp) => resp.data);
   };

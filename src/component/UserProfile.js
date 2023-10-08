@@ -15,7 +15,7 @@ function UserProfile() {
         <div className="container margin-top">
             <div className="row">
                <div className="card">
-               This is card
+                <h1>This is my Profile</h1>
                </div>
             </div>
         </div>
