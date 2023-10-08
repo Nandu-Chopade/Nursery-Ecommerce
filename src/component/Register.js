@@ -32,15 +32,15 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    // signUp(formData)
-    //   .then((response) => {
-    //     console.log(response);
-    //     toast.success("user registration successfully !!");
-    //     console.log("registration successfully");
-    //   })
-    //   .catch((error) => {
-    //     toast.error("failed to registration something went wrong tray again !");
-    //   });
+    signUp(formData)
+      .then((response) => {
+        console.log(response);
+        toast.success("user registration successfully !!");
+        console.log("registration successfully");
+      })
+      .catch((error) => {
+        toast.error("failed to registration something went wrong tray again !");
+      });
     // Handle form submission here, e.g., send data to a server or perform validation
   };
 
